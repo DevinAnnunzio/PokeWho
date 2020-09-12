@@ -13,10 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.devinannunzio.android.whosthatpokemon.models.Pokemon;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexViewHolder> {
-    public static class PokedexViewHolder extends RecyclerView.ViewHolder{
+    private ArrayList<Pokemon> dataSet;
+
+    public PokedexAdapter(){
+        dataSet = new ArrayList<>();
+    }
+
+
+    public void addListOfPokemon(ArrayList<Pokemon> pokemonList) {
+        dataSet.addAll(pokemonList);
+        notifyDataSetChanged();
+    }
+
+    public class PokedexViewHolder extends RecyclerView.ViewHolder{
         public LinearLayout containerView;
         public TextView textView;
         PokedexViewHolder(View view){
@@ -38,8 +49,6 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexV
 
     }
 
-    private List<Pokemon> pokemon = new ArrayList<>();
-
 
     @NonNull
     @Override
@@ -50,15 +59,15 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexV
 
     @Override
     public void onBindViewHolder(@NonNull PokedexViewHolder holder, int position) {
-        Pokemon current = pokemon.get(position);
+        Pokemon current = dataSet.get(position);
         holder.textView.setText(current.getName());
-        holder.containerView.setTag(1,current);
+        holder.containerView.setTag(current);
 
     }
 
 
     @Override
     public int getItemCount() {
-        return pokemon.size();
+        return dataSet.size();
     }
 }

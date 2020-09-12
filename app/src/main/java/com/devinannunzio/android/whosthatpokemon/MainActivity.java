@@ -21,17 +21,25 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "POKEDEX";
+    private  final String TAG = "POKEDEX";
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private Retrofit retrofit;
+    private PokedexAdapter pokedexAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        recyclerView = findViewById(R.id.recyclerView);
+        pokedexAdapter = new PokedexAdapter();
+        layoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setAdapter(pokedexAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -39,12 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         getData();
 
-        recyclerView = findViewById(R.id.recyclerView);
-        adapter = new PokedexAdapter();
-        layoutManager = new LinearLayoutManager(this);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
     }
 
     private void getData() {
@@ -58,9 +60,11 @@ public class MainActivity extends AppCompatActivity {
                      PokemonReply pokemonReply = response.body();
                      ArrayList<Pokemon> pokemonList = pokemonReply.getResults();
 
-                     for (Pokemon pokemon : pokemonList){
-                         Log.i(TAG,"Pokemon: " + pokemon.getName());
-                     }
+                     pokedexAdapter.addListOfPokemon(pokemonList);
+
+//                     for (Pokemon pokemon : pokemonList){
+//                         Log.i(TAG,"Pokemon: " + pokemon.getName());
+//                     }
 
                  } else{
                      Log.e(TAG,"onResponse: " + response.errorBody());
