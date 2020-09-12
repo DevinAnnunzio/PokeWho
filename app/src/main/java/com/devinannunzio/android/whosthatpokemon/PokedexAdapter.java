@@ -10,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Arrays;
+import com.devinannunzio.android.whosthatpokemon.models.Pokemon;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexViewHolder> {
@@ -36,12 +38,8 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexV
 
     }
 
-    private List<Pokemon> pokemon = Arrays.asList(
-            new Pokemon("Jim",1),
-             new Pokemon("Jim",5),
-              new Pokemon("Jon",2),
-               new Pokemon("LOL",3),
-                new Pokemon("YEET",4));
+    private List<Pokemon> pokemon = new ArrayList<>();
+
 
     @NonNull
     @Override

@@ -5,6 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class PokemonActivity extends AppCompatActivity {
 
     private TextView nameTextView;
@@ -14,6 +19,7 @@ public class PokemonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon);
+
         String name = getIntent().getStringExtra("name");
         int number = getIntent().getIntExtra("number",0);
 
@@ -24,4 +30,5 @@ public class PokemonActivity extends AppCompatActivity {
         numberTextView.setText(String.format("#%03d",number));
 
     }
+
 }
